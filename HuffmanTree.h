@@ -1,0 +1,12 @@
+
+
+#ifndef COMPRESSOR_HUFFMANTREE_H
+#define COMPRESSOR_HUFFMANTREE_H
+
+
+class HuffmanTree {
+
+};
+
+
+#endif //COMPRESSOR_HUFFMANTREE_H
