@@ -1,23 +1,16 @@
 
 #include "HuffmanTree.h"
-#include "HuffmanTree.h"
 #include <queue>
 #include <functional>
 #include <stack>
 
-// Comparator for priority queue of Nodes
-struct NodeComparator {
-    bool operator()(const Node *lhs, const Node *rhs) const {
-        return *lhs < *rhs;
-    }
-};
 
 void HuffmanTree::buildTree(FrequencyTable &table) {
-    std::priority_queue<Node *, std::vector<Node *>, NodeComparator> pq;
+    std::priority_queue<Node *, std::vector<Node *>, decltype(&Node::nodePtrComparator)> pq(Node::nodePtrComparator);
 
     for (int i = 0; i < 256; ++i) {
         if (table.getFrequency(i) > 0) {
-            pq.push(new Node(static_cast<char>(i), table.getFrequency(i)));
+            pq.push(new Node((char) i, table.getFrequency(i)));
         }
     }
 
@@ -27,7 +20,7 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
         Node *right = pq.top();
         pq.pop();
 
-        Node* combined = *left + *right; // Use + operator overloading
+        Node *combined = *left + *right; // Use + operator overloading
 
 
         pq.push(combined);
@@ -48,7 +41,7 @@ void HuffmanTree::buildCodeTable() {
         int code = current.second;
 
         if (!node->getLeft() && !node->getRight()) {
-            codeTable[static_cast<unsigned char>(node->getResp())] = code;
+            codeTable[(unsigned char) (node->getResp())] = code;
         }
         if (node->getLeft())
             stack.push({node->getLeft(), code << 1});

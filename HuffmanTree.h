@@ -21,12 +21,6 @@ private:
 public:
     HuffmanTree(FrequencyTable &table);
 
-
-
-
-
-
-
 };
 
 
