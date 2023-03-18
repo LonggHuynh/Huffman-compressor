@@ -4,6 +4,6 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    Codec::compress("abbc");
+    Codec::compress("aaaaaaaaaabcccccccccccccccddddddd");
     return 0;
 }

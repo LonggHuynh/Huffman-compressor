@@ -12,12 +12,12 @@ public:
 
     // Overload + operator
 //    Node* operator+(const Node &other) const;
-//    bool operator<(const Node &other) const;
+    bool operator>(const Node &other) const;
 
 
     static Node *merge(Node *l, Node *r);
 
-    static bool nodePtrComparator(const Node *l, const Node *r);
+    static bool largerComparator(const Node *l, const Node *r);
 
 
     // Set left child

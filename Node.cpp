@@ -20,7 +20,7 @@ char Node::getResp() {
 // Overload + operator
 Node *Node::merge(Node *l, Node *r) {
     // Add frequencies of the nodes and create a new node
-    if (!nodePtrComparator(l, r)) {
+    if (largerComparator(l, r)) {
         std::swap(l, r);
     }
 
@@ -44,10 +44,9 @@ void Node::setRight(Node *right) {
     this->right = right;
 }
 
-// Overload < operator
-bool Node::nodePtrComparator(const Node *lhs, const Node *rhs) {
+bool Node::largerComparator(const Node *lhs, const Node *rhs) {
     if (lhs->freq == rhs->freq) {
-        return lhs->resp < rhs->resp;
+        return lhs->resp > rhs->resp;
     }
-    return lhs->freq < rhs->freq;
+    return lhs->freq > rhs->freq;
 }

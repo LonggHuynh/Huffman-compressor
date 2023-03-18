@@ -1,16 +1,17 @@
 
 #include "HuffmanTree.h"
+#include "Utils.h"
 #include <queue>
 #include <functional>
 #include <stack>
 
 
 void HuffmanTree::buildTree(FrequencyTable &table) {
-    std::priority_queue<Node *, std::vector<Node *>, decltype(&Node::nodePtrComparator)> pq(Node::nodePtrComparator);
+    std::priority_queue<Node *, std::vector<Node *>, decltype(&Node::largerComparator)> pq(Node::largerComparator);
 
-    for (int i = 0; i < 256; ++i) {
-        if (table.getFrequency(i) > 0) {
-            pq.push(new Node((char) i, table.getFrequency(i)));
+    for (int symbol = 0; symbol < 256; ++symbol) {
+        if (table.getFrequency(symbol) > 0) {
+            pq.push(new Node((char) symbol, table.getFrequency(symbol)));
         }
     }
 
@@ -31,6 +32,7 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
 
 void HuffmanTree::buildCodeTable() {
     std::stack<std::pair<Node *, int>> stack;
+    codeTable.fill(0);
     stack.push({root, 0});
 
     while (!stack.empty()) {
@@ -46,25 +48,25 @@ void HuffmanTree::buildCodeTable() {
         if (node->getLeft())
             stack.push({node->getLeft(), code << 1});
         if (node->getRight())
-            stack.push({node->getRight(), code << 1 + 1});
+            stack.push({node->getRight(), (code << 1) + 1});
 
     }
 }
 
 
-std::array<char16_t, 256> HuffmanTree::originalCode() {
+std::array<char16_t, 256> HuffmanTree::originalCodes() {
     return this->codeTable;
 }
 
-std::array<char16_t, 256> HuffmanTree::canonicalCode() {
+std::array<char16_t, 256> HuffmanTree::canonicalCodes() {
     std::array<char16_t, 256> canonicalCodes;
-
+    canonicalCodes.fill(0);
     // Sort the symbols based on their code lengths
     std::vector<std::pair<unsigned char, int>> symbols;
-    for (int i = 0; i < 256; ++i) {
-        int codeLen = std::to_string(codeTable[i]).length();
-        if (codeLen > 0) {
-            symbols.push_back({(unsigned char) i, codeLen});
+    for (int symbol = 0; symbol < 256; ++symbol) {
+        if (frequencyTable.getFrequency(symbol)) {
+            int codeLen = Utils::bitLength(codeTable[symbol]);
+            symbols.push_back({(unsigned char) symbol, codeLen});
         }
     }
     std::sort(symbols.begin(), symbols.end(),
@@ -88,8 +90,8 @@ std::array<char16_t, 256> HuffmanTree::canonicalCode() {
 }
 
 
-HuffmanTree::HuffmanTree(FrequencyTable &table) {
-    buildTree(table);
+HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
+    buildTree(frequencyTable);
     buildCodeTable();
 }
 

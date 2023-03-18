@@ -10,6 +10,7 @@
 class HuffmanTree {
     Node *root;
     std::array<char16_t, 256> codeTable;
+    FrequencyTable frequencyTable;
 
 
 private:
@@ -18,11 +19,11 @@ private:
 
 public:
 
-    HuffmanTree(FrequencyTable &table);
+    HuffmanTree(const FrequencyTable &table);
     HuffmanTree(std::array<std::byte, 256> codeLen);
 
-    std::array<char16_t,256> originalCode();
-    std::array<char16_t,256> canonicalCode();
+    std::array<char16_t,256> originalCodes();
+    std::array<char16_t,256> canonicalCodes();
 
 };
 
