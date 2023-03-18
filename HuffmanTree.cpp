@@ -20,7 +20,7 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
         Node *right = pq.top();
         pq.pop();
 
-        Node *combined = *left + *right; // Use + operator overloading
+        Node *combined = Node::merge(left, right);
 
 
         pq.push(combined);
@@ -51,7 +51,47 @@ void HuffmanTree::buildCodeTable() {
     }
 }
 
+
+std::array<char16_t, 256> HuffmanTree::originalCode() {
+    return this->codeTable;
+}
+
+std::array<char16_t, 256> HuffmanTree::canonicalCode() {
+    std::array<char16_t, 256> canonicalCodes;
+
+    // Sort the symbols based on their code lengths
+    std::vector<std::pair<unsigned char, int>> symbols;
+    for (int i = 0; i < 256; ++i) {
+        int codeLen = std::to_string(codeTable[i]).length();
+        if (codeLen > 0) {
+            symbols.push_back({(unsigned char) i, codeLen});
+        }
+    }
+    std::sort(symbols.begin(), symbols.end(),
+              [](const std::pair<unsigned char, int> &a, const std::pair<unsigned char, int> &b) {
+                  return a.second < b.second || (a.second == b.second && a.first < b.first);
+              });
+
+    // Generate canonical codes
+    int currentCode = 0;
+    int prevLen = symbols[0].second;
+    for (const auto &symbol: symbols) {
+        while (prevLen < symbol.second) {
+            currentCode <<= 1;
+            ++prevLen;
+        }
+        canonicalCodes[symbol.first] = currentCode;
+        ++currentCode;
+    }
+
+    return canonicalCodes;
+}
+
+
 HuffmanTree::HuffmanTree(FrequencyTable &table) {
     buildTree(table);
     buildCodeTable();
 }
+
+
+

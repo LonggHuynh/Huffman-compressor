@@ -3,4 +3,4 @@ project(Compressor)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Compressor main.cpp Huffman.h Codec.cpp FrequencyTable.cpp Huffman.cpp HuffmanTree.cpp Node.h Node.cpp)
+add_executable(Compressor main.cpp  Codec.cpp Codec.h FrequencyTable.cpp FrequencyTable.h  HuffmanTree.cpp HuffmanTree.h Node.h Node.cpp)
