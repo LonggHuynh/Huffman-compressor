@@ -28,11 +28,21 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
     }
 
     root = pq.top();
+
+    //Special case, only one character, which causes the empty code when encoded. This is handled by creating make it a child of a fake node.
+    if (!root->getLeft()){
+        Node * newNode = new Node(root->getResp(), root->getFrequency());
+        newNode->setLeft(root);
+        root= newNode;
+    }
 }
+
+std::array<char16_t, 256> HuffmanTree::getCodeTable() {return this->codeTable;}
 
 void HuffmanTree::buildCodeTable() {
     std::stack<std::pair<Node *, int>> stack;
     codeTable.fill(0);
+    codeLengthTable.fill(0);
     stack.push({root, 0});
 
     while (!stack.empty()) {
@@ -40,32 +50,22 @@ void HuffmanTree::buildCodeTable() {
         stack.pop();
 
         Node *node = current.first;
-        int code = current.second;
+        int currentLen = current.second;
 
         if (!node->getLeft() && !node->getRight()) {
-            codeTable[(unsigned char) (node->getResp())] = code;
+            codeLengthTable[(unsigned char) (node->getResp())] = currentLen;
         }
         if (node->getLeft())
-            stack.push({node->getLeft(), code << 1});
+            stack.push({node->getLeft(), currentLen + 1});
         if (node->getRight())
-            stack.push({node->getRight(), (code << 1) + 1});
+            stack.push({node->getRight(), currentLen + 1});
 
     }
-}
 
-
-std::array<char16_t, 256> HuffmanTree::originalCodes() {
-    return this->codeTable;
-}
-
-std::array<char16_t, 256> HuffmanTree::canonicalCodes() {
-    std::array<char16_t, 256> canonicalCodes;
-    canonicalCodes.fill(0);
-    // Sort the symbols based on their code lengths
     std::vector<std::pair<unsigned char, int>> symbols;
     for (int symbol = 0; symbol < 256; ++symbol) {
         if (frequencyTable.getFrequency(symbol)) {
-            int codeLen = Utils::bitLength(codeTable[symbol]);
+            int codeLen = codeLengthTable[symbol];
             symbols.push_back({(unsigned char) symbol, codeLen});
         }
     }
@@ -82,12 +82,14 @@ std::array<char16_t, 256> HuffmanTree::canonicalCodes() {
             currentCode <<= 1;
             ++prevLen;
         }
-        canonicalCodes[symbol.first] = currentCode;
+        codeTable[symbol.first] = currentCode;
         ++currentCode;
     }
 
-    return canonicalCodes;
+
 }
+
+
 
 
 HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {

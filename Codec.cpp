@@ -9,7 +9,7 @@ namespace Codec {
         FrequencyTable frequencyTable(input);
 
         HuffmanTree huffmanTree(frequencyTable);
-        auto l = huffmanTree.canonicalCodes();
+        auto l = huffmanTree.getCodeTable();
         return ""; // Return the compressed string
     }
 

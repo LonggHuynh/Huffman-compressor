@@ -10,6 +10,9 @@ public:
 
     Node *getRight();
 
+
+    int getFrequency();
+
     // Overload + operator
 //    Node* operator+(const Node &other) const;
     bool operator>(const Node &other) const;

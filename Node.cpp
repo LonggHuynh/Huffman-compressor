@@ -44,6 +44,10 @@ void Node::setRight(Node *right) {
     this->right = right;
 }
 
+int Node::getFrequency() {
+    return this->freq;
+}
+
 bool Node::largerComparator(const Node *lhs, const Node *rhs) {
     if (lhs->freq == rhs->freq) {
         return lhs->resp > rhs->resp;
