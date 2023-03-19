@@ -38,7 +38,6 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
 
 void HuffmanTree::buildCodeTable() {
     std::stack<std::pair<Node *, int>> stack;
-    codeTable.fill(0);
     codeLengthTable.fill(0);
     stack.push({root, 0});
 
@@ -56,37 +55,14 @@ void HuffmanTree::buildCodeTable() {
             stack.push({node->getLeft(), currentLen + 1});
         if (node->getRight())
             stack.push({node->getRight(), currentLen + 1});
-
     }
 
-    std::vector<std::pair<unsigned char, int>> symbols;
-    for (int symbol = 0; symbol < 256; ++symbol) {
-        if (frequencyTable.getFrequency(symbol)) {
-            int codeLen = codeLengthTable[symbol];
-            symbols.push_back({(unsigned char) symbol, codeLen});
-        }
-    }
-    std::sort(symbols.begin(), symbols.end(),
-              [](const std::pair<unsigned char, int> &a, const std::pair<unsigned char, int> &b) {
-                  return a.second < b.second || (a.second == b.second && a.first < b.first);
-              });
-
-    // Generate canonical codes
-    int currentCode = 0;
-    int prevLen = symbols[0].second;
-    for (const auto &symbol: symbols) {
-        while (prevLen < symbol.second) {
-            currentCode <<= 1;
-            ++prevLen;
-        }
-        codeTable[symbol.first] = currentCode;
-        ++currentCode;
-    }
 }
 
-int HuffmanTree::getCode( unsigned char symbol) { return this->codeTable[symbol]; }
 
-int  HuffmanTree::getCodeLength( unsigned  char symbol) { return this->codeTable[symbol]; }
+std::array<int, 256> HuffmanTree::getCodeLengthTable() {
+    return codeLengthTable;
+}
 
 
 HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
@@ -95,11 +71,6 @@ HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
 }
 
 
-
-HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
-    buildTree(frequencyTable);
-    buildCodeTable();
-}
 
 
 

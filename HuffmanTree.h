@@ -8,8 +8,9 @@
 #include "FrequencyTable.h"
 
 class HuffmanTree {
+    HuffmanTree(const std::array<int, 256> &codeLen);
+
     Node *root;
-    std::array<int, 256> codeTable;
     std::array<int, 256> codeLengthTable;
     FrequencyTable frequencyTable;
 
@@ -23,11 +24,8 @@ public:
 
     HuffmanTree(const FrequencyTable &table);
 
-    HuffmanTree(std::array<std::byte, 256> codeLen);
 
-    int getCode(unsigned char symbol);
-
-    int getCodeLength(unsigned char symbol);
+    std::array<int,256> getCodeLengthTable();
 
 };
 
