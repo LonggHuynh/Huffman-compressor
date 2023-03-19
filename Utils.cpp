@@ -9,14 +9,14 @@
 
 int Utils::bitLength(int num) {
     int length = 0;
-    for (; num;  num >>= 1) {
+    for (; num; num >>= 1) {
         length++;
     }
     return std::max(length, 1);
 
 }
 
-void Utils::writeBitStreamToFile( std::vector<bool> &bitStream, const std::string &outputFile) {
+void Utils::writeBitStreamToFile(std::vector<bool> &bitStream, const std::string &outputFile) {
     std::ofstream output_file(outputFile, std::ios::binary);
 
     if (!output_file) {
@@ -32,7 +32,7 @@ void Utils::writeBitStreamToFile( std::vector<bool> &bitStream, const std::strin
     unsigned char byte = 0;
     int bit_position = 0;
 
-    for (bool bit : bitStream) {
+    for (bool bit: bitStream) {
         byte |= (bit << (7 - bit_position));
         bit_position++;
 
@@ -89,6 +89,31 @@ std::vector<bool> generateRandomBitArray(size_t size) {
     }
 
     return bit_array;
+}
+
+void Utils::addIntToBoolVector(std::vector<bool> &bool_vector, int value) {
+    for (int i = HEADER_INT_LENGTH - 1; i >= 0; --i) {
+        bool bit = (value >> i) & 1;
+        bool_vector.push_back(bit);
+    }
+}
+
+
+std::vector<int> Utils::boolVectorToIntVector(const std::vector<bool> &bool_vector) {
+    std::vector<int> int_vec;
+    size_t vector_size = bool_vector.size();
+
+    for (size_t i = 0; i < vector_size; i += HEADER_INT_LENGTH) {
+        int value = 0;
+
+        for (int j = 0; j < HEADER_INT_LENGTH && i + j < vector_size; ++j) {
+            value |= (bool_vector[i + j] << (HEADER_INT_LENGTH - 1 - j));
+        }
+
+        int_vec.push_back(value);
+    }
+
+    return int_vec;
 }
 
 

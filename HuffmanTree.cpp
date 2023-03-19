@@ -22,22 +22,19 @@ void HuffmanTree::buildTree(FrequencyTable &table) {
         pq.pop();
 
         Node *combined = Node::merge(left, right);
-
-
         pq.push(combined);
     }
 
     root = pq.top();
 
     //Special case, only one character, which causes the empty code when encoded. This is handled by creating make it a child of a fake node.
-    if (!root->getLeft()){
-        Node * newNode = new Node(root->getResp(), root->getFrequency());
+    if (!root->getLeft()) {
+        Node *newNode = new Node(root->getResp(), root->getFrequency());
         newNode->setLeft(root);
-        root= newNode;
+        root = newNode;
     }
 }
 
-std::array<char16_t, 256> HuffmanTree::getCodeTable() {return this->codeTable;}
 
 void HuffmanTree::buildCodeTable() {
     std::stack<std::pair<Node *, int>> stack;
@@ -85,10 +82,17 @@ void HuffmanTree::buildCodeTable() {
         codeTable[symbol.first] = currentCode;
         ++currentCode;
     }
-
-
 }
 
+int HuffmanTree::getCode( unsigned char symbol) { return this->codeTable[symbol]; }
+
+int  HuffmanTree::getCodeLength( unsigned  char symbol) { return this->codeTable[symbol]; }
+
+
+HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
+    buildTree(frequencyTable);
+    buildCodeTable();
+}
 
 
 
@@ -96,6 +100,9 @@ HuffmanTree::HuffmanTree(const FrequencyTable &table) : frequencyTable(table) {
     buildTree(frequencyTable);
     buildCodeTable();
 }
+
+
+
 
 
 

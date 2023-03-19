@@ -2,11 +2,13 @@
 #define COMPRESSOR_CODEC_H
 
 #include <string>
+#include <array>
+#include <vector>
 
 namespace Codec {
 
-    std::string compress(const std::string& input);
-    std::string decompress(const std::string& input);
+    std::vector<bool> compress(const std::string& input);
+    std::string decompress(const std::vector<bool>& input);
 
 };
 

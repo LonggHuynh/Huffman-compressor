@@ -9,21 +9,25 @@
 
 class HuffmanTree {
     Node *root;
-    std::array<char16_t, 256> codeTable;
-    std::array<char16_t, 256> codeLengthTable;
+    std::array<int, 256> codeTable;
+    std::array<int, 256> codeLengthTable;
     FrequencyTable frequencyTable;
 
 
 private:
     void buildTree(FrequencyTable &table);
+
     void buildCodeTable();
 
 public:
 
     HuffmanTree(const FrequencyTable &table);
+
     HuffmanTree(std::array<std::byte, 256> codeLen);
 
-    std::array<char16_t,256> getCodeTable();
+    int getCode(unsigned char symbol);
+
+    int getCodeLength(unsigned char symbol);
 
 };
 

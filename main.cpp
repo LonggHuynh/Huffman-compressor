@@ -4,6 +4,7 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    Codec::compress("aaaaaaaaaabcccccccccccccccddddddd");
+    auto com =Codec::compress("aaaaaaaaaabcccccccccccccccddddddd");
+    auto cc = Codec::decompress(com);
     return 0;
 }
