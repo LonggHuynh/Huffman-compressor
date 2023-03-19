@@ -102,12 +102,14 @@ std::string Codec::decompress(const std::vector<bool> &input) {
             unsigned char symbol = codeToChar[{curLen, curCode}];
 
 
+            if (symbol == (unsigned char) EOF)
+                break;
+
             output.push_back(symbol);
             curLen = 0;
             curCode = 0;
 
-            if (symbol == (unsigned char) EOF)
-                break;
+
         }
 
     }

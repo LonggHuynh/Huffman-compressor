@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
     if (mode == "compress") {
         outputFile = inputFile + ".myzip";
         std::string content = Utils::readFileToString(inputFile);
+        content.push_back((unsigned char) EOF);
         std::vector<bool> compressedData = Codec::compress(content);
         Utils::writeBoolVectorToFile(outputFile, compressedData);
     } else if (mode == "decompress") {

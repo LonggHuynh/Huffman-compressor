@@ -18,6 +18,4 @@ FrequencyTable::FrequencyTable(std::string content) {
     for (char symbol: content) {
         this->addSymbol(symbol);
     }
-    addSymbol((unsigned char) EOF);
-
 }

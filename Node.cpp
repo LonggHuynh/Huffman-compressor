@@ -17,9 +17,8 @@ char Node::getResp() {
     return resp;
 }
 
-// Overload + operator
 Node *Node::merge(Node *l, Node *r) {
-    // Add frequencies of the nodes and create a new node
+    //To make the tree unique, the havier node is on the right.
     if (largerComparator(l, r)) {
         std::swap(l, r);
     }
@@ -27,25 +26,22 @@ Node *Node::merge(Node *l, Node *r) {
     int newFreq = l->freq + r->freq;
     Node *newNode = new Node(l->resp, newFreq);
 
-    // Set left and right pointers of the new node
     newNode->setLeft(l);
     newNode->setRight(r);
 
     return newNode;
 }
 
-// Set left child
 void Node::setLeft(Node *left) {
     this->left = left;
 }
 
-// Set right child
 void Node::setRight(Node *right) {
     this->right = right;
 }
 
 int Node::getFrequency() {
-    return this->freq;
+    return freq;
 }
 
 bool Node::largerComparator(const Node *lhs, const Node *rhs) {

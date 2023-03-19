@@ -1,5 +1,3 @@
-
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -9,8 +7,6 @@
 #include <stdexcept>
 
 #include "Utils.h"
-
-
 
 std::string Utils::readFileToString(const std::string &filename) {
     std::ifstream inFile(filename, std::ios::binary);
@@ -26,6 +22,11 @@ std::string Utils::readFileToString(const std::string &filename) {
 
 void Utils::writeBoolVectorToFile(const std::string &filename, const std::vector<bool> &data) {
     std::ofstream outFile(filename, std::ios::binary);
+
+    if (!outFile.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
     for (size_t i = 0; i < data.size(); i += 8) {
         char byte = 0;
         for (size_t j = 0; j < 8 && i + j < data.size(); ++j) {
@@ -37,6 +38,11 @@ void Utils::writeBoolVectorToFile(const std::string &filename, const std::vector
 
 std::vector<bool> Utils::readBoolVectorFromFile(const std::string &filename) {
     std::ifstream inFile(filename, std::ios::binary);
+
+    if (!inFile.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
     std::vector<bool> data;
     char byte;
     while (inFile.get(byte)) {
@@ -49,6 +55,11 @@ std::vector<bool> Utils::readBoolVectorFromFile(const std::string &filename) {
 
 void Utils::writeStringToFile(const std::string &filename, const std::string &content) {
     std::ofstream outFile(filename, std::ios::binary);
+
+    if (!outFile.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
     outFile.write(content.data(), content.size());
 }
 
@@ -109,25 +120,6 @@ std::vector<int> Utils::boolVectorToIntVector(const std::vector<bool> &bool_vect
 
     return int_vec;
 }
-
-
-//void testReadWriteBitStreamToFile() {
-//    std::vector<bool> bit_stream = generateRandomBitArray(300);
-//    std::string output_file = "test_output.bin";
-//
-//    Utils::writeBitStreamToFile(bit_stream, output_file);
-//    std::vector<bool> read_bit_stream = Utils::readBitStreamFromFile(output_file);
-//
-//    assert(bit_stream == read_bit_stream);
-//    std::cout << "Test passed: writeBitStreamToFile and readBitStreamFromFile work correctly." << std::endl;
-//}
-//int main() {
-//    std::cout << "Hello, World!" << std::endl;
-//
-//    testReadWriteBitStreamToFile();
-//
-//    return 0;
-//}
 
 
 
