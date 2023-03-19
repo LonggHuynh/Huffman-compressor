@@ -1,10 +1,41 @@
 #include <iostream>
 #include "Codec.h"
+#include "Utils.h"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+// Function to check if the given filename has a .myzip extension
+bool hasMyZipExtension(const std::string &filename) {
+    return filename.size() >= 6 && filename.substr(filename.size() - 6) == ".myzip";
+}
 
-    auto com =Codec::compress("aaaaaaaaaabcccccccccccccccddddddd");
-    auto cc = Codec::decompress(com);
+int main(int argc, char *argv[]) {
+    // Check for correct number of arguments
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <compress/decompress> <input_file>" << std::endl;
+        return 1;
+    }
+
+    std::string mode = argv[1];
+    std::string inputFile = argv[2];
+    std::string outputFile;
+
+    if (mode == "compress") {
+        outputFile = inputFile + ".myzip";
+        std::string content = Utils::readFileToString(inputFile);
+        std::vector<bool> compressedData = Codec::compress(content);
+        Utils::writeBoolVectorToFile(outputFile, compressedData);
+    } else if (mode == "decompress") {
+        if (!hasMyZipExtension(inputFile)) {
+            std::cerr << "Input file does not have a .myzip extension." << std::endl;
+            return 1;
+        }
+        outputFile = inputFile.substr(0, inputFile.size() - 6);
+        std::vector<bool> compressedData = Utils::readBoolVectorFromFile(inputFile);
+        std::string decompressedContent = Codec::decompress(compressedData);
+        Utils::writeStringToFile(outputFile, decompressedContent);
+    } else {
+        std::cerr << "Invalid mode. Use 'compress' or 'decompress'." << std::endl;
+        return 1;
+    }
+
     return 0;
 }

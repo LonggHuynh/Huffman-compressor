@@ -15,7 +15,9 @@ int FrequencyTable::getFrequency(char symbol) {
 
 FrequencyTable::FrequencyTable(std::string content) {
     frequencies.fill(0);
-    for (char symbol: content){
+    for (char symbol: content) {
         this->addSymbol(symbol);
     }
+    addSymbol((unsigned char) EOF);
+
 }

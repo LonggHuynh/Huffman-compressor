@@ -30,6 +30,8 @@ public:
      */
     FrequencyTable(std::string content);
 
+    FrequencyTable();
+
 
 };
 
