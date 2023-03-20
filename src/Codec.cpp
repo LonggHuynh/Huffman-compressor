@@ -1,10 +1,10 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
-#include "Codec.h"
-#include "FrequencyTable.h"
-#include "HuffmanTree.h"
-#include "Utils.h"
+#include "../include/Codec.h"
+#include "../include/FrequencyTable.h"
+#include "../include/HuffmanTree.h"
+#include "../include/Utils.h"
 
 
 std::array<int, 256> Codec::canonicalCode(const std::array<int, 256> &codeLengthTable) {
@@ -22,6 +22,8 @@ std::array<int, 256> Codec::canonicalCode(const std::array<int, 256> &codeLength
               [](const std::pair<unsigned char, int> &a, const std::pair<unsigned char, int> &b) {
                   return a.second < b.second || (a.second == b.second && a.first < b.first);
               });
+    if (symbols.size() == 0)
+        return codeTable;
 
     // Generate canonical codes
     int currentCode = 0;
@@ -39,12 +41,15 @@ std::array<int, 256> Codec::canonicalCode(const std::array<int, 256> &codeLength
 }
 
 
-std::vector<bool> Codec::compress(std::string &input) {
+std::vector<bool> Codec::compress(std::string input) {
+    std::vector<bool> output;
+
+
+    input.push_back((unsigned char) EOF);
     FrequencyTable frequencyTable(input);
 
     HuffmanTree huffmanTree(frequencyTable);
 
-    std::vector<bool> output;
 
     std::array<int, 256> codeLengthTable = huffmanTree.getCodeLengthTable();
     std::array<int, 256> codeTable = canonicalCode(codeLengthTable);
@@ -75,6 +80,7 @@ std::vector<bool> Codec::compress(std::string &input) {
 std::string Codec::decompress(const std::vector<bool> &input) {
     // Implement the decompression algorithm here
     int header_length = HEADER_INT_LENGTH * 256;
+
     std::vector<bool> header(input.begin(), input.begin() + header_length); // contains elements from index 0 to n-1
     std::vector<bool> content(input.begin() + header_length, input.end());
 

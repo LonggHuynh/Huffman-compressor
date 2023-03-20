@@ -9,19 +9,6 @@
 
 namespace Utils {
 
-    /**
-     * @brief Generate a random bit array
-     * @param size Size of the bit array
-     * @return Randomly generated bit array
-     */
-    std::vector<bool> generateRandomBitArray(size_t size);
-
-    /**
-     * @brief Generate a random string
-     * @param length Length of the random string
-     * @return Randomly generated string
-     */
-    std::string generateRandomString(size_t length);
 
     /**
      * @brief Add an integer to a bool vector
@@ -64,6 +51,15 @@ namespace Utils {
      * @return Content of the file as a string
      */
     std::string readFileToString(const std::string &filename);
+
+    /**
+     * @brief Checks whether a given filename has a custom ".myzip" extension.
+     *
+     * @param filename The filename to check.
+     * @return True if the filename has a ".myzip" extension, false otherwise.
+     */
+    bool hasMyZipExtension(const std::string &filename) ;
+
 }
 
 #endif //COMPRESSOR_UTILS_H

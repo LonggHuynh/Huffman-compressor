@@ -1,7 +1,7 @@
 
 
 #include <algorithm>
-#include "Node.h"
+#include "../include/Node.h"
 
 Node::Node(char symbol, int frequency) : resp(symbol), freq(frequency), left(nullptr), right(nullptr) {}
 

@@ -1,6 +1,6 @@
 
 
-#include "FrequencyTable.h"
+#include "../include/FrequencyTable.h"
 
 
 void FrequencyTable::addSymbol(char symbol) {

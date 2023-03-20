@@ -27,7 +27,7 @@ namespace Codec {
      * @param input The input string to be compressed.
      * @return A vector of boolean values representing the compressed data.
      */
-     std::vector<bool> compress(std::string &input);
+    std::vector<bool> compress(std::string input);
 
     /**
      * @brief Decompresses the input data.
@@ -38,9 +38,16 @@ namespace Codec {
      * @param input The input vector of boolean values to be decompressed.
      * @return A string representing the decompressed data.
      */
-     std::string decompress(const std::vector<bool> &input);
+    std::string decompress(const std::vector<bool> &input);
 
+    /**
+     * @brief Generates a canonical Huffman code for a given set of code lengths.
+     *
+     * @param codeLengthTable An array of code lengths for each symbol in the alphabet.
+     * @return An array of integers representing the canonical Huffman code for each symbol in the alphabet.
+     */
     std::array<int, 256> canonicalCode(const std::array<int, 256> &codeLengthTable);
+
 };
 
 #endif // CODEC_H

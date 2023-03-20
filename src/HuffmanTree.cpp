@@ -1,6 +1,6 @@
 
-#include "HuffmanTree.h"
-#include "Utils.h"
+#include "../include/HuffmanTree.h"
+#include "../include/Utils.h"
 #include <queue>
 #include <functional>
 #include <stack>

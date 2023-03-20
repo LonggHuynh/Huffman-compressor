@@ -1,11 +1,8 @@
 #include <iostream>
-#include "Codec.h"
-#include "Utils.h"
+#include "../include/Codec.h"
+#include "../include/Utils.h"
 
 // Function to check if the given filename has a .myzip extension
-bool hasMyZipExtension(const std::string &filename) {
-    return filename.size() >= 6 && filename.substr(filename.size() - 6) == ".myzip";
-}
 
 int main(int argc, char *argv[]) {
     // Check for correct number of arguments
@@ -20,14 +17,14 @@ int main(int argc, char *argv[]) {
 
     if (mode == "compress") {
         outputFile = inputFile + ".myzip";
-        std::string  content = Utils::readFileToString(inputFile);
+        std::string content = Utils::readFileToString(inputFile);
         content.push_back((unsigned char) EOF);
 
 
         std::vector<bool> compressedData = Codec::compress(content);
         Utils::writeBoolVectorToFile(outputFile, compressedData);
     } else if (mode == "decompress") {
-        if (!hasMyZipExtension(inputFile)) {
+        if (!Utils::hasMyZipExtension(inputFile)) {
             std::cerr << "Input file does not have a .myzip extension." << std::endl;
             return 1;
         }

@@ -1,12 +1,11 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <sstream>
 #include <string>
 #include <stdexcept>
 
-#include "Utils.h"
+#include "../include/Utils.h"
 
 std::string Utils::readFileToString(const std::string &filename) {
     std::ifstream inFile(filename, std::ios::binary);
@@ -63,18 +62,6 @@ void Utils::writeStringToFile(const std::string &filename, const std::string &co
     outFile.write(content.data(), content.size());
 }
 
-std::vector<bool> generateRandomBitArray(size_t size) {
-    std::vector<bool> bit_array(size);
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 1);
-
-    for (size_t i = 0; i < size; ++i) {
-        bit_array[i] = dis(gen);
-    }
-
-    return bit_array;
-}
 
 void Utils::addIntToBoolVector(std::vector<bool> &bool_vector, int value) {
     for (int i = HEADER_INT_LENGTH - 1; i >= 0; --i) {
@@ -83,26 +70,6 @@ void Utils::addIntToBoolVector(std::vector<bool> &bool_vector, int value) {
     }
 }
 
-
-std::string Utils::generateRandomString(size_t length) {
-    static const char alphanum[] =
-            "0123456789"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "abcdefghijklmnopqrstuvwxyz";
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, sizeof(alphanum) - 2);
-
-    std::string result;
-    result.reserve(length);
-
-    for (size_t i = 0; i < length; ++i) {
-        result.push_back(alphanum[dis(gen)]);
-    }
-
-    return result;
-}
 
 std::vector<int> Utils::boolVectorToIntVector(const std::vector<bool> &bool_vector) {
     std::vector<int> int_vec;
@@ -119,6 +86,10 @@ std::vector<int> Utils::boolVectorToIntVector(const std::vector<bool> &bool_vect
     }
 
     return int_vec;
+}
+
+bool Utils::hasMyZipExtension(const std::string &filename) {
+    return filename.size() >= 6 && filename.substr(filename.size() - 6) == ".myzip";
 }
 
 
