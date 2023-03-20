@@ -7,7 +7,7 @@
 #include "Utils.h"
 
 
-std::array<int, 256> canonicalCode(const std::array<int, 256> &codeLengthTable) {
+std::array<int, 256> Codec::canonicalCode(const std::array<int, 256> &codeLengthTable) {
     std::array<int, 256> codeTable;
     codeTable.fill(0);
     std::vector<std::pair<unsigned char, int>> symbols;
@@ -39,7 +39,7 @@ std::array<int, 256> canonicalCode(const std::array<int, 256> &codeLengthTable) 
 }
 
 
-std::vector<bool> Codec::compress(const std::string &input) {
+std::vector<bool> Codec::compress(std::string &input) {
     FrequencyTable frequencyTable(input);
 
     HuffmanTree huffmanTree(frequencyTable);

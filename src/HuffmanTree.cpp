@@ -40,7 +40,6 @@ void HuffmanTree::buildCodeTable() {
     std::stack<std::pair<Node *, int>> stack;
     codeLengthTable.fill(0);
     stack.push({root, 0});
-
     while (!stack.empty()) {
         auto current = stack.top();
         stack.pop();
