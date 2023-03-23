@@ -1,18 +1,18 @@
-# MyZip 
+# MyZip
 MyZip is a simple command-line data compression and decompression tool that utilizes a custom compression algorithm based on Huffman coding. This tool is designed to compress text files into a smaller binary representation, making them easier to store and transfer.
 
 ## Features
 - Compress and decompress files using a custom Huffman-based compression algorithm
 - Generate canonical Huffman codes for optimal compression
-Simple command-line interface for easy compression and decompression
+  Simple command-line interface for easy compression and decompression
 - Support for .myzip file extension to indicate compressed files
 
 
 ## Getting Started
 ### Prerequisites
- - C++ compiler that supports C++11 or later
- - CMake 3.10 or later
- - GNU Make 4.1 or later
+- C++ compiler that supports C++11 or later
+- CMake 3.10 or later
+- GNU Make 4.1 or later
 
 ### Building
 Clone this repository to your local machine:
@@ -20,9 +20,17 @@ Clone this repository to your local machine:
 ``` git clone https://github.com/yourusername/myzip.git```
 
 Go to the project directory:
+``` 
+cd myzip 
+```
+
+and download the googletest library:
+``` 
+git clone https://github.com/google/googletest.git
+```
 
 
-``` cd myzip ```
+
 
 Build the project:
 
@@ -30,7 +38,7 @@ Build the project:
 mkdir build && cd build && cmake .. 
 ```
 
-then use, 
+then use:
 
 ```
 make
@@ -56,14 +64,14 @@ To decompress a file, run:
 
 This will decompress the contents of input.txt.myzip into a file named input.txt.
 
-### Testing 
+### Testing
 To run the unit tests, run:
 
 ```
 cd build && make test
 ```
 
-or for more details
+or for more details:
 
 ```
 cd build && make test ARGS=-V
