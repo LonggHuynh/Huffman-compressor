@@ -3,8 +3,7 @@ MyZip is a simple command-line data compression and decompression tool that util
 
 ## Features
 - Compress and decompress files using a custom Huffman-based compression algorithm
-- Generate canonical Huffman codes for optimal compression
-  Simple command-line interface for easy compression and decompression
+- Use canonical code instead of original one to make the header size fixed and much smaller (at least 4 times)
 - Support for .myzip file extension to indicate compressed files
 
 
