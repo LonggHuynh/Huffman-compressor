@@ -1045,3 +1045,7 @@ dkms.conf
 *.dis
 
 .idea
+
+
+# Github Actions
+.secrets

@@ -1,0 +1,64 @@
+name: Huffman Compressor CI/CD
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make
+
+    - name: Build
+      run: |
+        rm -rf build
+        mkdir build
+        cd build
+        cmake -DBUILD_TESTS=OFF ..
+        make
+        cd ..
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make
+
+    - name: Test
+      run: |
+        rm -rf build
+        mkdir build
+        cd build
+        cmake -DBUILD_TESTS=ON ..
+        make
+        make test
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/huffman-compressor:latest .
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/huffman-compressor:latest

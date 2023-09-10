@@ -1,10 +1,10 @@
 # Compressor
-MyZip is a simple command-line data compression and decompression tool that utilizes a custom compression algorithm based on Huffman coding. This tool is designed to compress text files into a smaller binary representation, making them easier to store and transfer.
+Compressor is a simple command-line data compression and decompression tool that utilizes a custom compression algorithm based on Huffman coding. This tool is designed to compress text files into a smaller binary representation, making them easier to store and transfer.
 
 ## Features
 - Compress and decompress files using a custom Huffman-based compression algorithm
 - Use canonical code instead of original one to make the header size fixed and much smaller (at least 4 times)
-- Support for .myzip file extension to indicate compressed files
+- Support for .cpred file extension to indicate compressed files
 
 
 ## Getting Started
@@ -42,7 +42,7 @@ cd ..
 
 
 ### Usage
-After building the project, you can use the myzip binary to compress or decompress files.
+After building the project, you can use the Compressor binary to compress or decompress files.
 
 To compress a file, run:
 
@@ -83,7 +83,11 @@ Build image :
 ```
 docker build -t image-name .
 ```
+Alternatively, you can pull the Docker image from Docker hub.
 
+```
+docker pull longhuynh5713/huffman-compressor
+```
 
 Run a container with volume:
 
