@@ -91,11 +91,6 @@ Run a container with volume:
 docker run -v ./your_input_folder:/data compressor compress /data/input.txt /data
 ```
 
-For example:
-```
-docker run -v ./data:/data compressor compress /data/input.txt /data
-```
-
-
+Where the input your_input_folder is the directory that stored compressed/plaintext files.
 
 
