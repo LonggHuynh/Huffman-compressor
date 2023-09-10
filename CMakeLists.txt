@@ -4,9 +4,7 @@ project(Compressor VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add Google Test as a dependency
-add_subdirectory(googletest)
-enable_testing()
+
 
 # Include directories
 include_directories(include)
@@ -20,5 +18,22 @@ add_library(Compressor_lib ${SOURCES})
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 
-# Test target
-add_subdirectory(tests)
+option(BUILD_TESTS "Build tests" OFF)
+if(BUILD_TESTS)
+    # Include FetchContent
+    include(FetchContent)
+
+    # Fetch GoogleTest
+    FetchContent_Declare(
+      googletest
+      GIT_REPOSITORY https://github.com/google/googletest.git
+      GIT_TAG        release-1.10.0  # adjust the version as needed
+    )
+
+    FetchContent_MakeAvailable(googletest)
+    # Disable -Werror for GoogleTest
+    target_compile_options(gtest PRIVATE -Wno-error)
+    target_compile_options(gtest_main PRIVATE -Wno-error)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
