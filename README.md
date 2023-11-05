@@ -9,7 +9,7 @@ Compressor is a simple command-line data compression and decompression tool that
 
 ## Getting Started
 ### Prerequisites
-- C++ compiler that supports C++11 or later
+- C++ compiler that supports C++11 or later 
 - CMake 3.10 or later
 - GNU Make 4.1 or later
 
